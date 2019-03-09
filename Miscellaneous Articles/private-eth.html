@@ -1,0 +1,214 @@
+<head>
+<link defer rel="stylesheet" href="toRead.css">
+</head>
+<body class="light sans-serif loaded">
+  <div id="container" class="container font-size5 content-width3">
+    <div id="reader-header" class="header" style="display: block;">
+      <style scoped="">
+        @import url("chrome://global/skin/aboutReaderControls.css");
+      </style>
+      <a id="reader-domain" class="domain" href="https://steemit.com/ethereum/@nphacker/setting-up-and-running-a-private-ethereum-blockchain-on-ubuntu">steemit.com</a>
+      <div class="domain-border"></div>
+      <h1 id="reader-title">Setting Up and Running a Private Ethereum Blockchain on Ubuntu — Steemit</h1>
+      <div id="reader-credits" class="credits"></div>
+      <div id="meta-data" class="meta-data">
+        <div id="reader-estimated-time">7-9 minutes</div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="content">
+      <style scoped="">
+        @import url("chrome://global/skin/aboutReaderContent.css");
+      </style>
+      <div id="moz-reader-content" class="line-height4" style="display: block;"><div id="readability-page-1" class="page"><div><div class="PostFull__body entry-content"><div class="MarkdownViewer Markdown"><div><h2>Introduction</h2>
+<p>In this post I will go over detailed steps on how to setup a private Ethereum blockchain on an Ubuntu 16.04 LTS instance. These steps should work on any modern Ubuntu operating system as well as many other Linux distros. The primary issue I had that led me to create this post was that there weren't any good documents on how to set up an Ethereum private instance. Currently a lot of corporations are looking to hire people with skills programming with an Ethereum blockchain, so this is certainly an extremely valuable skill to have.</p>
+<p><img src="https://steemitimages.com/0x0/https://i.imgur.com/UK2YxNv.jpg"></p>
+<h2>Setup</h2>
+<p>In this guide I will assume you have Ubuntu already installed on your computer and ready to go. If you don't please head on over to the <a href="https://www.ubuntu.com/download/desktop" rel="noopener">Ubuntu website</a> and get a copy of Ubuntu 16.04 LTS (don't worry it's free). After you have Ubuntu installed, install go-ethereum by following the steps on this <a href="https://github.com/ethereum/go-ethereum/wiki/Installation-Instructions-for-Ubuntu" rel="noopener">GitHub page</a>. Incase that page goes down, I have also listed the steps here:</p>
+<p>Installing from PPA as listed on the go-ethereum GitHub page</p>
+<pre><code>sudo apt-get install software-properties-common
+sudo add-apt-repository -y ppa:ethereum/ethereum
+sudo apt-get update
+sudo apt-get install ethereum
+</code></pre>
+<p>If you happen to be on other Linux operating systems you can also install <code>geth</code> from source.</p>
+<h3>Running from a remote cloud instance</h3>
+<p>If you are setting up your private blockchain on a cloud instance make sure ports 30303 and 8000 are accessible via TCP (you'll need to change this in your cloud instance settings if you're using AWS or similar). If you're only going to be using your blockchain locally don't worry about this for now.</p>
+<h2>Directory structure and files</h2>
+<p>In order to stay organized it's a good idea to first start out and create some necessary folders. For now lets create a folder in our home directory called <code>priv</code>. Open up the Terminal application, and type the following commands:</p>
+<pre><code>cd ~
+mkdir priv
+cd priv
+mkdir config
+mkdir data
+mkdir scripts
+</code></pre>
+<p>After this you should have a <code>priv</code> directory located at <code>/home/$USER/priv</code> where $USER is your username, and you should have the directories <code>/home/$USER/priv/config</code>, <code>/home/$USER/priv/data</code>, <code>/home/$USER/priv/scripts</code>.</p>
+<h2>Defining the genesis block</h2>
+<p>In this step we are going to create a file called <code>CustomGenesis.json</code> that contains data regarding our initial genesis block. Do the following steps to create this file:</p>
+<pre><code>cd ~/priv/config
+touch CustomGenesis.json
+</code></pre>
+<p>Now you should have an empty file called CustomGenesis.json located at <code>/home/$USER/priv/config/CustomGenesis.json</code> Next open the file in your favorite text editor for simplicities sake we will use <code>gedit</code> which ships by default with Ubuntu, and copy-paste the following contents into the file:</p>
+<p><strong>/home/$USER/priv/config/CustomGenesis.json</strong></p>
+<pre><code>{
+   "config": {
+        "chainId": 424242,
+        "homesteadBlock": 0,
+        "eip155Block": 0,
+        "eip158Block": 0
+    },
+    "nonce": "0x0000000000000042",
+    "mixhash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "difficulty": "0x400",
+    "alloc": {},
+    "coinbase": "0x3333333333333333333333333333333333333333",
+    "timestamp": "0x00",
+    "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "gasLimit": "0xffffffff",
+    "alloc": {
+        "8df9a875a174b3bc565e6424a0050ebc1b2d1d81": { "balance": "500042" },
+        "g41c74c9ae680c1aa78f42e5647a62f353b7bddf": { "balance": "600042" }
+    }
+}
+</code></pre>
+<p>This file defined the initial block configuration of our private blockchain. Save the file by doing <code>File -&gt; Save</code>, now we're ready to move on to the next part which is actually initializing our private Ethereum blockchain.</p>
+<h2>Initializing the blockchain with the genesis block</h2>
+<p>Now that we have defined our genesis block the next step is to create a script that initializes our private blockchain, we will create a file called <code>INIT_PRIV_CHAIN.sh</code> and give it executable permissions. Follow these steps to create that file:</p>
+<pre><code>cd ~/priv/scripts
+touch INIT_PRIV_CHAIN.sh
+chmod +x INIT_PRIV_CHAIN.sh
+</code></pre>
+<p>Open up <code>INIT_PRIV_CHAIN.sh</code> using <code>gedit</code> by doing:</p>
+<pre><code> gedit /home/$USER/priv/scripts/INIT_PRIV_CHAIN.sh
+</code></pre>
+<p>Copy-paste the following contents into the file and save:</p>
+<p><strong>/home/$USER/priv/scripts/INIT_PRIV_CHAIN.sh</strong></p>
+<pre><code>#!/bin/sh
+
+DATADIR=/home/$USER/priv/data
+GENESIS=/home/$USER/priv/config/CustomGenesis.json
+NETWORKID=42
+IDENTITY="MyPrivateChain"
+PORT=30303
+RPCPORT=8000
+
+# Initialize the private blockchain
+geth --networkid $NETWORKID --datadir=$DATADIR --identity $IDENTITY --port $PORT --rpcport $RPCPORT init $GENESIS
+</code></pre>
+<p>Now we can finally initialize our private Ethereum blockchain by running the script by doing:</p>
+<pre><code>cd ~/priv/scripts
+./INIT_PRIV_CHAIN.sh
+</code></pre>
+<p><strong>Congratulations you have successfully initialized a private Ethereum blockchain!</strong></p>
+<h2>Creating a daemon to keep the private blockchain running in the background</h2>
+<p>Now that we have successfully initialized our blockchain, let's create a daemon to make it such that our blockchain node runs in the background. For this step we will create another script called <code>START_CHAIN_DAEMON.sh</code> and give it executable privileges. To do this we do:</p>
+<pre><code>cd ~/priv/scripts
+touch START_CHAIN_DAEMON.sh
+chmod +x START_CHAIN_DAEMON.sh
+</code></pre>
+<p>Now just as before open <code>START_CHAIN_DAEMON.sh</code> with <code>gedit</code> by doing:</p>
+<pre><code>gedit /home/$USER/priv/scripts/START_CHAIN_DAEMON.sh
+</code></pre>
+<p>After doing this copy-paste the following contents and save:</p>
+<p><strong>/home/$USER/priv/scripts/START_CHAIN_DAEMON.sh</strong></p>
+<pre><code>#!/bin/sh
+PORT=30303
+RPCPORT=8000
+NETWORKID=42
+IDENTITY="MyPrivateChain"
+DATADIR=/home/$USER/priv/data
+NAT=none
+RPCADDR="0.0.0.0"
+
+nohup geth --rpc --ws --port $PORT --rpcport $RPCPORT --networkid $NETWORKID --datadir $DATADIR --nat $NAT --identity $IDENTITY --rpcaddr $RPCADDR --wsaddr $RPCADDR --rpccorsdomain * &amp;
+</code></pre>
+<p>Now we can finally run our private Ethereum blockchain by running the script by doing:</p>
+<pre><code>cd ~/priv/scripts
+./START_CHAIN_DAEMON.sh
+</code></pre>
+<p>This will make it such that our private chain is running in the background, to stop the chain you can do:</p>
+<pre><code>ps ax | grep "geth"
+</code></pre>
+<p>This will list all of the processes that are associated with <code>geth</code> to stop the process find the process id associated with <code>geth</code> and do <code>kill -term XXXX</code> that number where <code>XXXX</code> is that process id.</p>
+<h2>Connecting to the blockchain and executing remote calls via a JavaScript console</h2>
+<p>Now that the private Ethereum blockchain is up and running, we can communicate with the blockchain by doing:</p>
+<pre><code>geth attach http://0.0.0.0:8000
+</code></pre>
+<p>in a local terminal session, if you have a cloud instance with port 8000 open as well as port 30303 you can communicate with the blockchain remotely from any computer by doing:</p>
+<pre><code>geth attach http://X.X.X.X:8000
+</code></pre>
+<p>where X.X.X.X is your cloud instance's public IP address.</p>
+<h2>What's next?</h2>
+<p>Now that you have a private Ethereum blockchain running you can look into developing and deploying smart contract based applications using <a href="https://github.com/trufflesuite/truffle" rel="noopener">TruffleJS</a> or you can try developing using ConsenSys' JSONRPC Python library <a href="https://github.com/ConsenSys/ethjsonrpc" rel="noopener">Ethjsonrpc</a>. You can also develop native decentralized applications using the <a href="https://github.com/ethereum/go-ethereum/wiki/Native-DApps:-Go-bindings-to-Ethereum-contracts" rel="noopener">Native Ethereum Go Bindings</a>.</p>
+<h2>Conclusion</h2>
+<p>I hope you enjoyed this post on setting up and running a private blockchain on an Ubuntu instance. If you have any corrections, suggestions, or corrections please comment below.</p>
+<p><em>Cheers</em><br>
+<em>~Np</em></p></div></div></div></div></div></div>
+    </div>
+
+    <div>
+      <style scoped="">
+        @import url("chrome://global/skin/aboutReaderControls.css");
+      </style>
+      <div id="reader-message" style="display: none;">Loading…</div>
+    </div>
+  </div>
+
+  
+  <ul class="dropdown" id="narrate-dropdown"><style scoped="">
+      @import url("chrome://global/skin/narrateControls.css");
+    </style>
+    <li>
+       <button class="dropdown-toggle button" id="narrate-toggle" title="Narrate">
+         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+          <style>
+            @keyframes grow {
+              0%   { transform: scaleY(1);   }
+              15%  { transform: scaleY(1.5); }
+              15%  { transform: scaleY(1.5); }
+              30%  { transform: scaleY(1);   }
+              100% { transform: scaleY(1);   }
+            }
+
+            #waveform &gt; rect {
+              fill: #808080;
+            }
+
+            .speaking #waveform &gt; rect {
+              fill: #58bf43;
+              transform-box: fill-box;
+              transform-origin: 50% 50%;
+              animation-name: grow;
+              animation-duration: 1750ms;
+              animation-iteration-count: infinite;
+              animation-timing-function: linear;
+            }
+
+            #waveform &gt; rect:nth-child(2) { animation-delay: 250ms; }
+            #waveform &gt; rect:nth-child(3) { animation-delay: 500ms; }
+            #waveform &gt; rect:nth-child(4) { animation-delay: 750ms; }
+            #waveform &gt; rect:nth-child(5) { animation-delay: 1000ms; }
+            #waveform &gt; rect:nth-child(6) { animation-delay: 1250ms; }
+            #waveform &gt; rect:nth-child(7) { animation-delay: 1500ms; }
+
+          </style>
+          <g id="waveform">
+            <rect x="1" y="8" width="2" height="8" rx=".5" ry=".5"></rect>
+            <rect x="4" y="5" width="2" height="14" rx=".5" ry=".5"></rect>
+            <rect x="7" y="8" width="2" height="8" rx=".5" ry=".5"></rect>
+            <rect x="10" y="4" width="2" height="16" rx=".5" ry=".5"></rect>
+            <rect x="13" y="2" width="2" height="20" rx=".5" ry=".5"></rect>
+            <rect x="16" y="4" width="2" height="16" rx=".5" ry=".5"></rect>
+            <rect x="19" y="7" width="2" height="10" rx=".5" ry=".5"></rect>
+          </g>
+         </svg>
+        </button>
+    </li>
+    
+
+
+
+</body>

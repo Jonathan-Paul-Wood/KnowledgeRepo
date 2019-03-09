@@ -1,0 +1,150 @@
+
+       <div id="reader-header" style="display: block;">
+            <a id="reader-domain" href="https://hackernoon.com/blockchain-for-non-techies-3-smart-contracts-104f77277297">hackernoon.com</a>
+            <div class="domain-border"></div>
+            <h1 id="reader-title">3. Smart contracts – Hacker Noon</h1>
+            <div id="reader-credits" class="credits">William Rode</div>
+            <div id="meta-data" class="meta-data">
+              <div id="reader-estimated-time">12-15 minutes</div>
+            </div>
+          </div>
+<div id="readability-page-1" class="page">
+    <section name="d6ab" class="section section--body section--first">
+        <div class="section-content">
+            <div class="section-inner sectionLayout--insetColumn">
+                <p name="f8e0" id="f8e0" class="graf graf--p graf-after--h3 graf--trailing">
+                    <em class="markup--em markup--p-em">
+                        This is the third post in a series on blockchain technology, where I give a non-technical introduction. In the </em><a href="https://hackernoon.com/blockchain-for-non-techies-1-agreement-4a54857b82ba" data-href="https://hackernoon.com/blockchain-for-non-techies-1-agreement-4a54857b82ba" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">
+                            <em class="markup--em markup--p-em">first post</em>
+                        </a>
+                            <em class="markup--em markup--p-em">
+                                 I focus on agreement, and in the </em><a href="https://hackernoon.com/blockchain-for-non-techies-2-how-they-work-2f94d313c7e5" data-href="https://hackernoon.com/blockchain-for-non-techies-2-how-they-work-2f94d313c7e5" class="markup--anchor markup--p-anchor" target="_blank">
+                                    <em class="markup--em markup--p-em">
+                                        second post</em></a>
+                                        <em class="markup--em markup--p-em">
+                                             I explain how blockchains work.</em></p>
+            </div>
+        </div>
+    </section>
+    <section name="a627" class="section section--body">
+        <div class="section-content">
+            <div class="section-inner sectionLayout--insetColumn">
+                <p name="5aaa" id="5aaa" class="graf graf--p graf--leading">Smart contracts are an important part of the enthusiasm surrounding blockchain technology, so in this post I will explain what a smart contract is. But first, let’s quickly recap of the magic analogy I use in my previous post to explain a blockchain. A public blockchain can be imagined in the following way:</p>
+                <ul class="postList">
+                    <li name="09b1" id="09b1" class="graf graf--li graf-after--p">An identical agreement is written on a set of enchanted documents</li>
+                    <li name="0b38" id="0b38" class="graf graf--li graf-after--li">Anyone can take part in maintaining this agreement by owning one of these documents</li>
+                    <li name="bc89" id="bc89" class="graf graf--li graf-after--li">Rules describe the changes you are allowed to make to a document</li>
+                    <li name="944a" id="944a" class="graf graf--li graf-after--li">Any valid change to one document is automatically made to all the other documents</li>
+                </ul>
+                <p name="8eb1" id="8eb1" class="graf graf--p graf-after--li">These properties result in each participant owning an identical copy of the same agreement, even though the agreement undergoes continuous change.</p>
+                <figure name="634f" id="634f" class="graf graf--figure graf-after--p">
+                    <div class="aspectRatioPlaceholder is-locked"></div>
+                </figure>
+                <p name="b74d" id="b74d" class="graf graf--p graf-after--figure">
+                    The magic analogy above describes <em class="markup--em markup--p-em">one</em> set of enchanted documents (blockchain) that follows one set of rules. Different sets of enchanted documents have different rules for what changes are valid. The original set of enchanted documents is called Bitcoin, the rules for this set of documents are:</p>
+                <ol class="postList">
+                    <li name="7acc" id="7acc" class="graf graf--li graf-after--p">Each enchanted document contains a list of all accounts and balances.</li>
+                    <li name="56e1" id="56e1" class="graf graf--li graf-after--li">People own accounts, and can send their own bitcoins to other accounts.</li>
+                </ol>
+                <p name="a3e5" id="a3e5" class="graf graf--p graf-after--li">In essence, these rules create a digital cash. Below is an illustration of one of the enchanted documents maintained across the Bitcoin network. The number next to each account denotes the amount of bitcoins in that account.</p>
+                <figure name="8814" id="8814" class="graf graf--figure graf-after--p">
+                    <div class="aspectRatioPlaceholder is-locked"></div>
+                </figure>
+                <p name="a26f" id="a26f" class="graf graf--p graf-after--figure">Another set of documents is called Ethereum. The enchanted documents that make up Ethereum follow very similar rules to Bitcoin:</p>
+                <ol class="postList">
+                    <li name="1316" id="1316" class="graf graf--li graf-after--p">Each enchanted document contains a list of all accounts and balances.</li>
+                    <li name="3e89" id="3e89" class="graf graf--li graf-after--li">Owners of accounts can send transactions to other accounts.</li>
+                </ol>
+                <p name="0291" id="0291" class="graf graf--p graf-after--li">Those of you with an eye for details might have noticed slight differences in wording between the second rule of Ethereum and the second rule of Bitcoin. The difference is that some accounts on the Ethereum blockchain are not controlled by people. Instead, the actions of these accounts are controlled by a set of instructions residing on the accounts.</p>
+                <p name="e022" id="e022" class="graf graf--p graf-after--p">Below is an illustration of one of the enchanted documents on the Ethereum blockchain. In the illustration, the accounts B, E and G are controlled by instructions and not people:</p>
+                <figure name="0834" id="0834" class="graf graf--figure graf-after--p">
+                    <div class="aspectRatioPlaceholder is-locked"></div>
+                </figure>
+                <p name="24f4" id="24f4" class="graf graf--p graf-after--figure">
+                    When a set of instructions reside on one of these accounts it is called a <em class="markup--em markup--p-em">
+                        smart contract</em>. The instructions are just computer code, essentially just logic. If “poked” by a transaction from another account, the smart contract can:</p>
+                <ul class="postList">
+                    <li name="2342" id="2342" class="graf graf--li graf-after--p">Perform calculations</li>
+                    <li name="188a" id="188a" class="graf graf--li graf-after--li">Store information</li>
+                    <li name="0e15" id="0e15" class="graf graf--li graf-after--li">Send transactions to other accounts</li>
+                </ul>
+                <p name="48df" id="48df" class="graf graf--p graf-after--li">
+                    As mentioned, the account with the code is not controlled by any person, it is completely autonomous! 
+                    <span name="anon_dab647e0e150" data-creator-ids="anon">The original code is written by a person, but once the smart contract code is uploaded to the blockchain, only the logic in the account dictates the actions of that account.</span></p>
+                <p name="80af" id="80af" class="graf graf--p graf-after--p">
+                    Many people are critical of the name “<em class="markup--em markup--p-em">smart contract”. </em>One reason being that a smart contract is not necessarily smart. It is just a set of instructions that anyone can write, and people are very capable of creating some pretty dumb smart contracts.</p>
+                <p name="a45c" id="a45c" class="graf graf--p graf-after--p">
+                    The name <em class="markup--em markup--p-em">smart contract</em> is also misleading because it is not really a contract, at least not in the sense that it’s anything that needs to be complied with or upheld. A normal contract has legal consequences in the ‘real world’. If the counterparty of a contract does not uphold their part of the agreement, the legal system can be used to hold them accountable. On the contrary, a smart contract does not have to be upheld by anyone, it’s a set of instructions that self-executes. A smart contact does not have much precedence in the ‘real world’. It is only able to send transactions to other accounts on the blockchain, any other precedence must be acquired by creating a legal wrapper around the blockchain agreement.</p>
+                <h3 name="76ac" id="76ac" class="graf graf--h3 graf-after--p">Code is&nbsp;law</h3>
+                <p name="c186" id="c186" class="graf graf--p graf-after--h3">
+                    When entering into a normal contract, several factors play an important role in whether you can trust what you are signing. The most obvious part is an understanding of what is written in the contract. The contract lays out the terms and conditions of an agreement in legalese (lawyer language), which is what you are committing to. Therefore, it is important to understand this legalese and how this is interpreted by the legal system. This is why you always carefully read the terms and conditions of your Spotify/Facebook/etc agreement. <em class="markup--em markup--p-em">
+                        You</em> would never sign an agreement that commits you to providing your firstborn as payment for using their service, as 98% of people <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2757465" data-href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2757465" rel="noopener" target="_blank">would</a>.</p>
+                <figure name="12f7" id="12f7" class="graf graf--figure graf-after--p">
+                    <div class="aspectRatioPlaceholder is-locked"></div>
+                </figure>
+                <p name="4f45" id="4f45" class="graf graf--p graf-after--figure">Secondly, the terms and conditions that are laid out in a contract are constrained by a large body of existing law. This means that you can’t be sure how the contract will play out by just looking at the content of the contract. There are laws that prohibit you from paying with your firstborn, even if you agree to this. Therefore, it is important to understand how this legal context plays in.</p>
+                <p name="9d23" id="9d23" class="graf graf--p graf-after--p">
+                    These contextual laws often work as a safeguard, at times making contracts work as <em class="markup--em markup--p-em">
+                        intended</em> instead of as <em class="markup--em markup--p-em">
+                            written</em>. Journalist <a href="https://medium.com/@matt_levine" data-href="https://medium.com/@matt_levine" data-anchor-type="2" data-user-id="ad43ba450942" data-action-value="ad43ba450942" data-action="show-user-card" data-action-type="hover" target="_blank">Matt Levine</a> has an <a href="http://dealbreaker.com/2013/07/electricity-market-rules-were-not-a-worthy-opponent-for-jpmorgans-brainpower/" data-href="http://dealbreaker.com/2013/07/electricity-market-rules-were-not-a-worthy-opponent-for-jpmorgans-brainpower/" rel="noopener" target="_blank">article</a> about JPMorgan receiving a hefty fine, even after following the conditions set forth in a contract. The contract regulated the electricity market, and JPMorgan found a way to game the contract. JPMorgan did not break the rules set forth in the contract, they followed them carefully, but they did break the intent of the contract and were caught in the net of market manipulation laws.</p>
+                <p name="2b67" id="2b67" class="graf graf--p graf-after--p">Even if you enslave your firstborn to try and uphold your part of a contract, there is still a risk that this is not enough. You could sell all your belongings and sell your family into debt bondage, but it might still not cover your obligations in the agreement, and so the other guy ends up not getting paid. The risk of entering into a contract with someone who is not able to fulfill their part of the agreement is called counterparty risk, and must also be taken into account when entering a contract.</p>
+                <p name="cbb4" id="cbb4" class="graf graf--p graf-after--p">
+                    Last of all, even if you understand the contract and the legal context you still need to trust in the rule of law. Sometimes, <em class="markup--em markup--p-em">de jure ≠ de facto</em>. That’s why you might be hesitant to enter into an agreement with the son of the president in Corruptland. The contract is not worth the paper it’s written on.</p>
+                <figure name="3e6b" id="3e6b" class="graf graf--figure graf-after--p">
+                    <div class="aspectRatioPlaceholder is-locked"></div>
+                </figure>
+                <p name="ef24" id="ef24" class="graf graf--p graf-after--figure">So how do these factors compare to smart contracts? A smart contract essentially consists of two elements which you need to understand/trust:</p>
+                <ol class="postList">
+                    <li name="ac79" id="ac79" class="graf graf--li graf-after--p">The code and how this is interpreted</li>
+                    <li name="5139" id="5139" class="graf graf--li graf-after--li">The immutability of the blockchain</li>
+                </ol>
+                <p name="8842" id="8842" class="graf graf--p graf-after--li">
+                    Just like with normal contracts, it´s important to understand the actual content of a smart contract when interacting with it. But unlike a normal contract, which is written in legalese and interpreted by the legal system, the content of the smart contract is written in computer code and interpreted by computers. So what does smart contract code actually look like? Below is an example, an extract of a smart contract (don’t worry, you’re not expected to understand it):</p><pre name="7984" id="7984" class="graf graf--pre graf-after--p">function payOut(address _recipient, uint _amount) returns (bool) {<br> if (msg.sender != owner || msg.value &gt; 0 || (payOwnerOnly &amp;&amp; _recipient != owner))<br> throw;<br> if (_recipient.call.value(_amount)()) {<br> PayOut(_recipient, _amount);<br> return true;<br> } else {<br> return false;<br> }<br>}</pre>
+                <p name="3b45" id="3b45" class="graf graf--p graf-after--pre">
+                    The smart contract code is the terms and conditions that you are signing up for when interacting with a smart contract. As long as you trust the blockchain that the smart contract resides on, you know that the code will execute exactly as programmed - so no breach of agreement can exist. It is important to note however, that working as <em class="markup--em markup--p-em">programmed</em> does not mean that it will work as <em class="markup--em markup--p-em">intended</em> if there are errors in the code.</p>
+                <h3 name="b075" id="b075" class="graf graf--h3 graf-after--p">
+                    Smart contract applications</h3>
+                <p name="ba99" id="ba99" class="graf graf--p graf-after--h3">As we have already established, smart contracts are a set of instructions residing on a blockchain, written in computer code. This code can be written in an infinite number of ways, just like words specifying the terms and conditions of a normal contract can be written in an infinite number of ways. But like words in a sentence, there is an infinite number of ways to arrange the code in a smart contract that does not make sense. That’s not interesting and no one cares. What is interesting however, are the ways to arrange the logic which makes sense. So what does make sense?</p>
+                <p name="ca21" id="ca21" class="graf graf--p graf-after--p">Before we answer that question for <strong class="markup--strong markup--p-strong">smart contracts</strong>, let us take a step back and consider the imagined potential applications of <strong class="markup--strong markup--p-strong">blockchains</strong>.</p>
+                <p name="63c4" id="63c4" class="graf graf--p graf-after--p">After the original Bitcoin paper was published, people started to realize that other types of agreements could be maintained using the same underlying technology. People imagined other agreements which would specify ownership of different types of assets and the rules for <em class="markup--em markup--p-em">how</em> the agreements would be updated. Some of these other applications were:</p>
+                <ul class="postList">
+                    <li name="e590" id="e590" class="graf graf--li graf-after--p">Digital identities (e.g. websites)</li>
+                    <li name="8604" id="8604" class="graf graf--li graf-after--li">Non-digital assets such as gold, oil and real estate</li>
+                    <li name="b953" id="b953" class="graf graf--li graf-after--li">A country’s currency, and other new types of currency</li>
+                    <li name="23cb" id="23cb" class="graf graf--li graf-after--li">Financial instruments such as shares, mortgages and bonds</li>
+                    <li name="ea90" id="ea90" class="graf graf--li graf-after--li">Provably fair gambling and betting</li>
+                    <li name="1ff4" id="1ff4" class="graf graf--li graf-after--li">Rules for a data storage market</li>
+                    <li name="6667" id="6667" class="graf graf--li graf-after--li">Rules for a computational market</li>
+                </ul>
+                <p name="7c39" id="7c39" class="graf graf--p graf-after--li">The challenge was that each blockchain was being built with one application in mind. Every new application required a whole new blockchain, and creating a new blockchain requires a lot of resources, since a set of participants need to start maintaining a new agreement.</p>
+                <p name="d74a" id="d74a" class="graf graf--p graf-after--p">Smart contracts changed this. The magic rules that define the functionality of one blockchain can be replicated into smart contracts on an existing smart contract blockchain. This means that instead of building a new blockchain for every type of application, it is possible to add several types of applications to <em class="markup--em markup--p-em">one</em> blockchain by using smart contracts. You essentially have many blockchains on the same blockchain.</p>
+                <figure name="e0ad" id="e0ad" class="graf graf--figure graf-after--p">
+                    <div class="aspectRatioPlaceholder is-locked"></div>
+                </figure>
+                <p name="beb2" id="beb2" class="graf graf--p graf-after--figure">As an example, the blockchains which specify ownership of different types of assets, the “magic document” is essentially just a list that describes <em class="markup--em markup--p-em">who owns what</em>. Instead of using a whole blockchain for this application, this information can be included in a smart contract. Like the blockchain, the smart contract would essentially just be a list of accounts and their ownership, with rules describing valid updates to this list.</p>
+                <blockquote name="ef65" id="ef65" class="graf graf--blockquote graf-after--p">Smart contracts have the same applications as blockchains</blockquote>
+                <p name="b000" id="b000" class="graf graf--p graf-after--blockquote">Smart contracts also allow you to create smaller niche agreements, that would never be feasible to create a whole new blockchain for. Imagine I want to gamble with some people I have met on an internet forum, we could make a smart contract that locked our funds for 10 days and then paid one of us randomly. Making a whole new blockchain for this specific use case really does not make any sense, but creating a smart contract that utilizes the existing infrastructure of a smart contract blockchain does.</p>
+                <p name="f625" id="f625" class="graf graf--p graf-after--p">The power of smart contract blockchains is not fully apparent before you think about the value of the interaction between the different applications. As an example, if you have two smart contracts, one for the ownership of dollars and one for the ownership of real estate, you can use a third smart contract as an escrow, allowing a purchase of real estate without an intermediary third party.</p>
+                <p name="8a1c" id="8a1c" class="graf graf--p graf-after--p">There are many use-cases being built on blockchains, and building them as smart contracts on the same platform creates an ecosystem of applications that complement each other.</p>
+                <h3 name="307b" id="307b" class="graf graf--h3 graf-after--p">Programmable agreement</h3>
+                <p name="a618" id="a618" class="graf graf--p graf-after--h3">Blockchain technology is a new way of maintaining an agreement in a decentralized manner. Smart contracts enable anyone to define their own agreements within this larger agreement.</p>
+                <p name="f5af" id="f5af" class="graf graf--p graf-after--p">It is not clear which agreements will be maintained by blockchains in the future, but smart contracts make it easier for anyone to create the applications they think are promising. For money, which is arguably blockchain technology’s <em class="markup--em markup--p-em">killer app</em>, I enjoy taking a step back to look at the bigger picture:</p>
+                <p name="bca0" id="bca0" >From the cradle of civilization when money was first invented, people could own money. Eventually, entities that people imagined, such as states and companies, were able to own money. Now, for the first time in history, a machine (logic) can independently own money.</p>
+                <p name="f3d8" id="f3d8" >The consequences of this are hard to know, but I think it is fair to say that we have interesting times ahead.</p>
+                <figure name="eca7" id="eca7" class="graf graf--figure graf-after--p graf--trailing">
+                    <div class="aspectRatioPlaceholder is-locked"></div>
+                </figure>
+            </div>
+        </div>
+    </section>
+    <section name="f8ec" class="section section--body section--last">
+        <div class="section-content">
+            <div class="section-inner sectionLayout--insetColumn">
+                <p name="b3b7" id="b3b7" class="graf graf--p graf--leading"><em class="markup--em markup--p-em">If you liked this post, you can help me share it by recommending it below ❤</em></p>
+                <p name="396d" id="396d" class="graf graf--p graf-after--p graf--trailing"><em class="markup--em markup--p-em">If you </em><strong class="markup--strong markup--p-strong"><em class="markup--em markup--p-em">really </em></strong><em class="markup--em markup--p-em">liked it, you can tip me some Ether or Tokens at the following address: 0xAEe32096745dbf51362E2984fC0fFb78d7a47f47</em></p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<link rel="stylesheets" src="toRead.css">
