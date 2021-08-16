@@ -1,0 +1,56 @@
+[The following was posted on 2021-01-25 by u/DevilRenegade at https://www.reddit.com/r/talesfromtechsupport/comments/l4r5kl/what_do_you_mean_we_told_you_to_stop_the_backups/]
+
+"What do you mean we told you to stop the backups??!"
+Long
+
+So a bit of background first. I used to be a shift team lead for a hosted outsourcing company that provided our own software on AS400 based systems to various financial institutions. Some of these companies were very small and only had a single box. Some were larger and had a pair of boxes (usually one serving as the live environment and one as the test environment). Others had more for different functions.
+
+Some did all their own development, others paid us to do their dev and bugfixing work for them. One of the most important things we handled in the NOC was physical backups. Each box had it's own backup schedule, where it would back up to IBM Ultrium tapes. Each morning, one of our tasks was to remove the tape from the previous night's backup, scan the barcode and send them offsite to our secure storage facility. Once that was done we'd make sure that the scratch tape for the next scheduled backup was loaded and ready to go.
+
+This one company we dealt with had both a live and test environment, and had their own in-house developers. Initially they were both backed up nightly but due to a cost limiting exercise, the IT manager on their side submitted a change request to limit the test system to one backup per week, to be carried out on a Friday night. No problem. Amend the backup schedules, and update the documentation to reflect the change. All sorted.
+
+I wasn't there when all of this happened but it was all included and documented on the shift handover report when our team took over, so we knew we didn't have to load tapes for this particular box until Friday.
+
+About 8 months later, we received a P1 ticket in the NOC from one of their developers, this happened on a Thursday afternoon (I'm sure you can see where this is going by now).
+
+"Help! Library ABC1234 on the test system was just accidentally deleted. Please can this be restored from last night's backup urgently?"
+
+My tech who received the ticket confirmed with me correctly that they were now on weekly backups on this particular box, and the most recent backup we had was almost a week old. My tech relays this back to the end user in an email. The user calls back immediately
+
+"No! That's not good enough, if that's the most recent backup you have that means we've lost almost a week's worth of critical work. I need to speak to your supervisor immediately!"
+
+I duly took over the call.
+
+"Your colleague has just informed me that you've stopped backing up this system daily! This is unacceptable."
+
+"As I heard my colleague explain, the backup schedules are decided by your company, and as this was a test system as opposed to a live environment, the decision was taken on your side to reduce the backup frequency from daily to weekly. You need to speak to your IT department for clarity on this."
+
+"I'll do that, you haven't heard the last of this!"
+
+About half an hour later, another one of my guys gets a call asking to be put straight through to me.
+
+"Yes, this is John Smith, the Systems Manager from Company XYZ. I've just had an interesting conversation with one of my developers stating that you've stopped doing our backups that we're paying you to perform. Just for your information this call is being recorded and I've got a conference call with our solicitors in 15 minutes whereby if this is not resolved satisfactorily by that time, we will be filing a lawsuit for the cost of our lost development work, and a recording of this call will be used as evidence."
+
+Wow, talk about aggressive. I explain to the guy that 8 months ago, someone at their company submitted a change request that we reduce the backup frequency on this system from daily to weekly, and this was carried out as requested.
+
+"Well that's just insane. Nobody here would have done that. I need the name of the person who submitted the request as well as the person on your side who actioned the request without verifying that the request was received from an authorised member of our CAB!"
+
+"OK, well I wasn't on-shift when that change was made but it will have all been documented on our ticketing system, bear with me a second. Ah, here we go. So the request was made on April 12th this year by a John Smith, Systems Manager. That's you, right?"
+
+"Uhm, that's not right, there must be another person here with that name."
+
+"You've got two John Smiths, both working as Systems Managers? Does that not get confusing?"
+
+"No, erm. I don't recall asking you to do this."
+
+"Well we have the email saved to the original ticket, along with several emails back and forth where we asked you to clarify a couple of points, and also a scanned copy of the signed change form where you've written your name and signature. Did you want me to forward these over for your solicitors? Although I suspect you might already have copies of them if you check your sent items folder.."
+
+"Erm, no that's fine thanks. I'll let the developers know that you can't recover the file."
+
+"That'd be great thanks, is there anything else I can help you with today Mr Smith?"
+
+*click.
+
+Printed off the ticket and dug out a copy of the call recording to forward around to the team, and I added this to my training guides for new hires as an example of why documenting everything is critical.
+
+Always remember rules 1 through 10 of tech support. Cover your arse and document everything!
